@@ -5,7 +5,7 @@ import con from './Db/connection.js'
 import web from './routes/web.js'
 const app = express()
 const port = process.env.PORT
-const db_url = process.env.db_url
+const db_url = process.env.DATABASE_URL
 
 con(db_url)
 app.use(express.urlencoded({extended:false}))

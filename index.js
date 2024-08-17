@@ -13,6 +13,11 @@ app.use(express.urlencoded({extended:false}))
 app.set('view engine','ejs')
 app.use('/',web)
 
+app.use((req, res, next) => {
+    res.setHeader("Content-Security-Policy", "default-src 'self'; img-src 'self' data:; media-src 'self' data:; script-src 'self'; style-src 'self'");
+    next();
+});
+
 
 app.use(express.static('public'))
 

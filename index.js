@@ -7,19 +7,20 @@ const app = express()
 const port = process.env.PORT
 const db_url = process.env.DATABASE_URL
 
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 con(db_url)
 app.use(express.urlencoded({extended:false}))
 
-app.set('view engine','ejs')
+app.use(express.static(path.join(__dirname, 'public')));
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
 app.use('/',web)
-
-app.use((req, res, next) => {
-    res.setHeader("Content-Security-Policy", "default-src 'self'; img-src 'self' data:; media-src 'self' data:; script-src 'self'; style-src 'self'");
-    next();
-});
-
-
-app.use(express.static('public'))
 
 app.listen(port,()=>{
     console.log(`port run on http://localhost:${port}`)
